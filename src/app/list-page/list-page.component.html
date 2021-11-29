@@ -1,9 +1,9 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Income</a>
-    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Outcome</a>
-    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Loans</a>
-    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Investments</a>
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" routerLink="/navigator" [queryParams]="{'tabID':'0'}" role="tab" aria-controls="nav-home" aria-selected="true">Income</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" routerLink="/navigator" [queryParams]="{'tabID':'1'}" role="tab" aria-controls="nav-profile" aria-selected="false">Outcome</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" routerLink="/navigator" [queryParams]="{'tabID':'2'}" role="tab" aria-controls="nav-contact" aria-selected="false">Loans</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" routerLink="/navigator" [queryParams]="{'tabID':'3'}" role="tab" aria-controls="nav-contact" aria-selected="false">Investments</a>
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
@@ -16,13 +16,28 @@
     </table>
   </div>
   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-
+    <table>
+        <tr *ngFor="let t of outcomes">
+            <td>{{t.name}}</td>
+            <td>{{t.amount}}</td>
+        </tr>
+    </table>
   </div>
   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-      
+    <table>
+        <tr *ngFor="let t of loans">
+            <td>{{t.name}}</td>
+            <td>{{t.amount}}</td>
+        </tr>
+    </table>
   </div>
   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-      
+    <table>
+        <tr *ngFor="let t of investments">
+            <td>{{t.name}}</td>
+            <td>{{t.amount}}</td>
+        </tr>
+    </table>
   </div>
 </div>
 
