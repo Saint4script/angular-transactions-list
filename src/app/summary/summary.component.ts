@@ -13,7 +13,7 @@ export class SummaryComponent {
 
     constructor(private http: HttpClient, private transactionService: TransactionService){};
 
-    addTransaction(
+    createTransaction(
         type:string, 
         id:number,
         amount: number,
@@ -23,8 +23,8 @@ export class SummaryComponent {
         email: string,
         phone: string,
         address: string
-    ) {
-        this.transactions.push(
+    ): Transaction {
+        return (
             new Transaction(
                         type, 
                         id, 
@@ -38,13 +38,11 @@ export class SummaryComponent {
         );
     }
 
-    transactions: Transaction[] = [];
-
     // надо бы классами сделать, конечно...
-    incomes: Object[] = [];
-    investments: Object[] = [];
-    outcomes: Object[] = [];
-    loans: Object[] = [];
+    incomes: Transaction[] = [];
+    investments: Transaction[] = [];
+    outcomes: Transaction[] = [];
+    loans: Transaction[] = [];
 
 
     // мб иx просто брать из массива объектов выше?
@@ -59,47 +57,75 @@ export class SummaryComponent {
         this.http.get('../assets/res/transactions.json').subscribe(
             (data:any) => data.data.forEach((tr: any) => {
 
-                let amount = Math.floor(Math.random() * 1_000_000);
                 this.totalTransactions++;
+
+                let amount = Math.floor(Math.random() * 1_000_000);
 
                 switch(tr.type) {
                     case TransactionType.Income: {
                         this.totalIncome++;
-                        this.incomes.push(tr);
+                        this.incomes.push(this.createTransaction(
+                            tr.type, 
+                            tr._id, 
+                            amount, 
+                            tr.name.first,
+                            tr.name.last,
+                            tr.company,
+                            tr.email,
+                            tr.phone,
+                            tr.address
+                        ));
                         break;
                     }
                         
                     case TransactionType.Investment: {
                         this.totalInvestments++;
-                        this.investments.push(tr);
+                        this.investments.push(this.createTransaction(
+                            tr.type, 
+                            tr._id, 
+                            amount, 
+                            tr.name.first,
+                            tr.name.last,
+                            tr.company,
+                            tr.email,
+                            tr.phone,
+                            tr.address
+                        ));
                         break;
                     }
 
                     case TransactionType.Loan: {
                         this.totalLoans++;
-                        this.loans.push(tr);
+                        this.loans.push(this.createTransaction(
+                            tr.type, 
+                            tr._id, 
+                            amount, 
+                            tr.name.first,
+                            tr.name.last,
+                            tr.company,
+                            tr.email,
+                            tr.phone,
+                            tr.address
+                        ));
                         break;
                     }
 
                     case TransactionType.Outcome: {
                         this.totalOutcome++;
-                        this.outcomes.push(tr);
+                        this.outcomes.push(this.createTransaction(
+                            tr.type, 
+                            tr._id, 
+                            amount, 
+                            tr.name.first,
+                            tr.name.last,
+                            tr.company,
+                            tr.email,
+                            tr.phone,
+                            tr.address
+                        ));
                         break;
                     }
                 }
-
-                this.addTransaction(
-                    tr.type, 
-                    tr._id, 
-                    amount, 
-                    tr.name.first,
-                    tr.name.last,
-                    tr.company,
-                    tr.email,
-                    tr.phone,
-                    tr.address
-                );
-                // console.log(this.transactions);
             }
         ));
 

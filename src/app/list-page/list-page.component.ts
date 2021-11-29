@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
+
 import { TransactionService } from '../transaction.service';
+import { Transaction, TransactionType } from '../transaction';
 
 @Component({
   selector: 'app-list-page',
@@ -11,7 +13,13 @@ import { TransactionService } from '../transaction.service';
 export class ListPageComponent implements OnInit{
 
     tabID: any;
-    totalIncome: number = 0;
+
+    rawTransactions: Map<string, Array<Transaction>> = new Map();
+    
+    incomes: Transaction[] | undefined = [];
+    investments: Transaction[] | undefined = [];
+    outcomes: Transaction[] | undefined = [];
+    loans: Transaction[] | undefined = [];
      
     // private routeSubscription: Subscription;
     private querySubscription: Subscription;
@@ -29,7 +37,11 @@ export class ListPageComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        console.log(this.transactionService.getData());
+        // console.log(this.transactionService.getData());
+        this.rawTransactions = this.transactionService.getData();
+        this.incomes = this.rawTransactions.get("incomes");
+        console.log(this.incomes);
+
     }
 
 }
