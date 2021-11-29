@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SummaryComponent } from './summary/summary.component';
 
 import { HttpClientModule }   from '@angular/common/http';
+import { TransactionService } from './transaction.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { HttpClientModule }   from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [TransactionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import {Transaction, TransactionType} from '../transaction';
-// import TransactionService from '../transaction';
+import { Transaction, TransactionType } from '../transaction';
+import { TransactionService } from '../transaction.service';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.css']
+  styleUrls: ['./summary.component.css'],
 })
 
 export class SummaryComponent {
 
-    constructor(private http: HttpClient){};
+    constructor(private http: HttpClient, private transactionService: TransactionService){};
 
     addTransaction(
         type:string, 
@@ -99,8 +99,13 @@ export class SummaryComponent {
                     tr.phone,
                     tr.address
                 );
-                console.log(this.transactions);
+                // console.log(this.transactions);
             }
         ));
+
+        this.transactionService.addData("incomes", this.incomes);
+        this.transactionService.addData("outcomes", this.outcomes);
+        this.transactionService.addData("loans", this.loans);
+        this.transactionService.addData("investments", this.investments);
     }
 }
