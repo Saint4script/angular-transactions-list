@@ -1,5 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Subscription} from 'rxjs';
 
 import { TransactionService } from '../transaction.service';
@@ -24,7 +24,7 @@ export class ListPageComponent implements OnInit{
     // private routeSubscription: Subscription;
     private querySubscription: Subscription;
 
-    constructor(private route: ActivatedRoute, private transactionService: TransactionService){
+    constructor(private route: ActivatedRoute, private transactionService: TransactionService, private router: Router){
          
         // this.routeSubscription = route.params.subscribe(params=>this.tabID=params['tabID']);
         this.querySubscription = route.queryParams.subscribe(
@@ -40,8 +40,63 @@ export class ListPageComponent implements OnInit{
         // console.log(this.transactionService.getData());
         this.rawTransactions = this.transactionService.getData();
         this.incomes = this.rawTransactions.get("incomes");
-        console.log(this.incomes);
+        this.outcomes = this.rawTransactions.get("outcomes");
+        this.loans = this.rawTransactions.get("loans");
+        this.investments = this.rawTransactions.get("investments");
+
+        
+        // initial last-page onOpen event class fix
+        switch (this.tabID) {
+            case "2": {
+                let prevTabBlock = document.querySelector('div#incomes');
+                prevTabBlock?.classList.remove("show");
+                prevTabBlock?.classList.remove("active");
+                let prevTab = document.querySelector('a#income-tab');
+                prevTab?.classList.remove("active");
+
+                let curTabBlock = document.querySelector('div#outcomes');
+                curTabBlock?.classList.add("show");
+                curTabBlock?.classList.add("active");
+                let curTab = document.querySelector('a#outcome-tab');
+                curTab?.classList.add("active");
+                break;
+            }
+
+            case "3": {
+                let prevTabBlock = document.querySelector('div#incomes');
+                prevTabBlock?.classList.remove("show");
+                prevTabBlock?.classList.remove("active");
+                let prevTab = document.querySelector('a#income-tab');
+                prevTab?.classList.remove("active");
+
+                let curTabBlock = document.querySelector('div#loans');
+                curTabBlock?.classList.add("show");
+                curTabBlock?.classList.add("active");
+                let curTab = document.querySelector('a#loans-tab');
+                curTab?.classList.add("active");
+                break;
+            }
+
+            case "1": {
+                let prevTabBlock = document.querySelector('div#incomes');
+                prevTabBlock?.classList.remove("show");
+                prevTabBlock?.classList.remove("active");
+                let prevTab = document.querySelector('a#income-tab');
+                prevTab?.classList.remove("active");
+
+                let curTabBlock = document.querySelector('div#investments');
+                curTabBlock?.classList.add("show");
+                curTabBlock?.classList.add("active");
+                let curTab = document.querySelector('a#investments-tab');
+                curTab?.classList.add("active");
+
+                break;
+            }
+        }
+        
 
     }
+
+    
 
 }
