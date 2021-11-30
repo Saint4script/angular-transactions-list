@@ -1,9 +1,9 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {Subscription} from 'rxjs';
 
 import { TransactionService } from '../transaction.service';
-import { Transaction, TransactionType } from '../transaction';
+import { Transaction } from '../transaction';
 
 @Component({
   selector: 'app-list-page',
@@ -21,12 +21,10 @@ export class ListPageComponent implements OnInit{
     outcomes: Transaction[] | undefined = [];
     loans: Transaction[] | undefined = [];
      
-    // private routeSubscription: Subscription;
     private querySubscription: Subscription;
 
-    constructor(private route: ActivatedRoute, private transactionService: TransactionService, private router: Router){
+    constructor(private route: ActivatedRoute, private transactionService: TransactionService){
          
-        // this.routeSubscription = route.params.subscribe(params=>this.tabID=params['tabID']);
         this.querySubscription = route.queryParams.subscribe(
             (queryParam: any) => {
                 this.tabID = queryParam['tabID'];
@@ -37,7 +35,7 @@ export class ListPageComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        // console.log(this.transactionService.getData());
+
         this.rawTransactions = this.transactionService.getData();
         this.incomes = this.rawTransactions.get("incomes");
         this.outcomes = this.rawTransactions.get("outcomes");
@@ -93,10 +91,5 @@ export class ListPageComponent implements OnInit{
                 break;
             }
         }
-        
-
     }
-
-    
-
 }

@@ -11,6 +11,5 @@ export class TransactionService{
     addData(name: string, value: Array<Transaction>){
           
         this.data.set(name, value);
-        // console.log(this.data);
     }
 }
